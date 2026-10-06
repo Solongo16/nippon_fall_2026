@@ -148,8 +148,8 @@
 ;; passing-average? : Number Number Number -> Boolean
 (define (average03 a b c)
   (/ (+ a b c) 3))
-(define (passing-averages? average03)
-  (>= (average03 a b c) 60))
+(define (passing-averages? a b c)
+  (>= (a b c) 60))
 ;; average3 60 ба түүнээс дээш бол #t
 (check-expect (passing-averages? 60 60 60) #t)
 (check-expect (passing-averages? 59 60 60) #f)
