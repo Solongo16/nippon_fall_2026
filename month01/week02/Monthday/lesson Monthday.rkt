@@ -145,17 +145,22 @@
 (check-expect (same-total? 5000 3 3000 5) #t)
 (check-expect (same-total? 5000 3 5000 2) #f)
 
-;; passing-average? : Number Number Number -> Boolean
+;; passing-average? : Number Number Number -> BooleOn branch main
 (define (average03 a b c)
   (/ (+ a b c) 3))
 (define (passing-averages? a b c)
   (>= (a b c) 60))
+  (>= (average03 a b c) 60))
 ;; average3 60 ба түүнээс дээш бол #t
 (check-expect (passing-averages? 60 60 60) #t)
 (check-expect (passing-averages? 59 60 60) #f)
 
 ;; discount-eligible? : Number Number Number -> Boolean
-
+(define (discount-eligible price count discount)
+  (- (item-total price count)
+     (discount-amount (item-total price count) discount)))
+(define (discount-eligible? price count discount)
+  (>= (discount-eligible price count discount) 50000))
 ;; final-price 50000 ба түүнээс их бол #t (нэгж үнэ, тоо, хувь)
 (check-expect (discount-eligible? 5000 10 0) #t)    ; 50000
 (check-expect (discount-eligible? 5000 10 10) #f)   ; 45000
