@@ -1,0 +1,1 @@
+1. testnii aldaatai garsan: 7, 21,22, 25  2.function composition (hamgiin hetsuu) 3. haalt dutuu, daraalal buruu, hamgiin deed taliin bichigdel dutuu, else baihgui, temdeg dutuu, or-iig and-aar solison
