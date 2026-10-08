@@ -1,0 +1,1 @@
+Function bur suragchdiin average socre ashiglan pass hiisen esehiig shalgaj, attendance n 80-s deesh, dasgal n 70s ih uyd Eligible bolno. 2. Passing-score, attendance, dasgaliin onoogoor dundajlana student badge uusgej baina 3. composition duudah dasgal ajil ahin hiilee

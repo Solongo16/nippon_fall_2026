@@ -1,0 +1,94 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname grade-system) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+;; sum3 : Number Number Number -> Number
+(define (sum3 a b c)
+  (+ a b c))
+(check-expect (sum3 80 90 70) 240)
+
+;; average3 : Number Number Number -> Number
+(define (average3 a b c)
+  (/ (+ a b c) 3))
+;; гурван тооны дундаж. sum3-г дуудна.
+(check-expect (average3 80 90 70) 80)
+(check-expect (average3 60 60 60) 60)
+
+
+;; assignment-percent : Number Number -> Number
+(define (assignment-percent done total)
+  (* (/ done total) 100))
+;; хийсэн ба нийт даалгавар → гүйцэтгэлийн хувь (total > 0)
+(check-expect (assignment-percent 8 10) 80)
+(check-expect (assignment-percent 7 10) 70)
+(check-expect (assignment-percent 0 10) 0)
+
+
+;; passing-average? : Number Number Number -> Boolean
+(define  (passing-average? a b c)
+  (>= (average3 a b c) 60))
+
+;; average3 60 ба түүнээс дээш бол #t
+(check-expect (passing-average? 60 60 60) #t)
+(check-expect (passing-average? 59 59 59) #f)
+(check-expect (passing-average? 100 80 0) #t)   ; дундаж яг 60
+
+
+;; good-attendance? : Number -> Boolean
+(define (good-attendance? A)
+  (>= A 80))
+;; ирц 80 ба түүнээс дээш бол #t
+(check-expect (good-attendance? 80) #t)
+(check-expect (good-attendance? 79) #f)
+
+;; assignments-complete? : Number Number -> Boolean
+(define (assignments-complete? done total)
+  (>= (assignment-percent done total) 70))
+;; assignment-percent 70 ба түүнээс дээш бол #t. assignment-percent-г дуудна.
+(check-expect (assignments-complete? 7 10) #t)
+(check-expect (assignments-complete? 6 10) #f)
+(check-expect (assignments-complete? 0 10) #f)
+
+
+;; eligible? : Number Number Number Number Number Number -> Boolean
+(define (eligible? s1 s2 s3 attendance done total)
+  (and (passing-average? s1 s2 s3) (>= attendance 80)
+      (assignments-complete? done total)))
+;; s1 s2 s3 attendance completed total → гурван шалгуур бүгд үнэн бол #t
+(check-expect (eligible? 80 90 70 85 8 10) #t)
+(check-expect (eligible? 80 90 70 79 8 10) #f)   ; ирц
+(check-expect (eligible? 59 59 59 100 10 10) #f) ; оноо
+(check-expect (eligible? 80 90 70 85 6 10) #f)   ; даалгавар
+
+
+;; final-status : Number Number Number Number Number Number -> String
+(define (final-status s1 s2 s3 attendance done total)
+  (if (eligible? s1 s2 s3 attendance done total)
+      "Eligible"
+      "Not eligible"))
+;; тэнцсэн бол "Eligible", үгүй бол "Not eligible"
+(check-expect (final-status 80 90 70 85 8 10) "Eligible")
+(check-expect (final-status 80 90 70 79 8 10) "Not eligible")
+
+;; letter-grade : Number -> String
+(define (letter-grade grade)
+  (cond
+    [(>= grade 90) "A"]
+    [(>= grade 80) "B"]
+    [(>= grade 70) "C"]
+    [(>= grade 60) "D"]
+    [ else "F"]))
+;; дундаж оноо → "A" "B" "C" "D" "F" (Мягмарын grade-тэй ижил дүрэм)
+(check-expect (letter-grade 90) "A")
+(check-expect (letter-grade 89) "B")
+(check-expect (letter-grade 80) "B")
+(check-expect (letter-grade 79) "C")
+(check-expect (letter-grade 60) "D")
+(check-expect (letter-grade 59) "F")
+
+;; student-grade : Number Number Number -> String
+(define (student-grade a b c)
+  (letter-grade (average3 a b c)))
+;; гурван оноо → үсгэн дүн. average3 ба letter-grade-г дуудна.
+(check-expect (student-grade 80 90 70) "B")
+(check-expect (student-grade 100 90 80) "A")
+
