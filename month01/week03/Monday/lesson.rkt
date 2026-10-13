@@ -20,8 +20,8 @@ scores
 (rest scores)
 ;; 2dahi hevleh
 (first (rest scores))
-(empty? scores)
-(cons? scores)
+(empty? scores) ;; empty uyd true
+(cons? scores) ;; ogogdol baigaa uyd true
 
 ;;Exercies
 (define temperatures (cons 18 (cons 25 (cons 70 (cons 15 empty)))))
@@ -60,4 +60,8 @@ scores
 (check-expect (second-subject (cons "A" (cons "B" (cons "C" empty))))
 "B")
 
+;;Exercise 4A
+(define temps (cons -5 (cons 0 (cons 12 empty))))
+(check-expect (first temps) -5)
+(check-expect (first (rest (rest temps))) 12)
 
