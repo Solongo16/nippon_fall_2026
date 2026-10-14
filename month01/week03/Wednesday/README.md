@@ -1,0 +1,1 @@
+(cond [(empty? l) #f] BAse case buruu 2. >= limitees baga baih ystoi uchir temdeg (>) bolno 3. Base case deer empty? 0 gej baigaa uchi (cond [(empty? (rest l)) (first l)] bolgono 4. (sum (rest l) n (sum l) bolno 5. Beside-iig above bolgono   A) testend buruu hariulsan dugaar: 4, 9, 14, 17, 18, 19, 20, 29, 3 B) NEList-iin template bichihdee list-iig first bolon rest gej zadlana
