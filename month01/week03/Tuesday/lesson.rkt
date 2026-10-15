@@ -259,3 +259,4 @@
         [(positive? (first l)) (+ 1 (count-positive-4 (rest l)))]
         [else (count-positive-4 (rest l))]))
 (check-expect (count-positive-4 (cons 5 (cons -1 empty))) 1)
+

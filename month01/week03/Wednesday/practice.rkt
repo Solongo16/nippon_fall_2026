@@ -1,6 +1,6 @@
 ;; The first three lines of this file were inserted by DrRacket. They record metadata
 ;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-beginner-reader.ss" "lang")((modname Untitled) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname practice) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 ;;REVIEW
 ;; count-zeros : List-of-numbers -> Number
 (define (count-zeros number)
@@ -20,7 +20,8 @@
 (define (all-positive? number)
   (cond
     [(empty? number) #t]
-    [else (and (positive? (first number))
+    [else
+     (and (positive? (first number))
               (all-positive? (rest number)))])) 
 ;; бүх тоо эерэг бол #t. Хоосон list-д эерэг биш тоо байхгүй тул #t.
 (check-expect (all-positive? empty) #t)
