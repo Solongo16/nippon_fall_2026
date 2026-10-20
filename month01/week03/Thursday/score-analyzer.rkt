@@ -84,7 +84,7 @@
           (passing-scores (rest p)))]))  
       
 ;; зөвхөн тэнцсэн оноонууд
-(check-expect (passing-scores mixed-scores) (list 60 72 100))
+(check-expect (passing-scores mixed-scores) (list 60 72 100)) ;;cons ashiglasnaar shne list uusj baina
 (check-expect (passing-scores (list 10 20)) empty)
 
 ;; score-bars : List-of-numbers -> Image

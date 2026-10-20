@@ -95,8 +95,8 @@
   (cond
     [(empty? number) #f]
     [else
-     (or (= (first number) target)
-          (contains? target (rest number)))]))
+     (or (= (first number) target)  ; first number n target -tei tentsuu bol True
+          (contains? target (rest number)))])) ;; esvel uldsen too (rest number)-t target too baival true gargana
 ;; target list дотор байвал #t
 (check-expect (contains? 5 empty) #f)
 (check-expect (contains? 5 (cons 3 (cons 5 (cons 7 empty)))) #t)
@@ -133,8 +133,6 @@
 (check-expect (find-max (cons 70 empty)) 70)
 (check-expect (find-max (cons 70 (cons 95 (cons 63 empty)))) 95)
 (check-expect (find-max (cons -5 (cons -2 empty))) -2)
-
-
 
 
 

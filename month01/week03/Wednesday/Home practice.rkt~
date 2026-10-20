@@ -1,0 +1,126 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname |Home practice|) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+;; EX03
+;; sum-positive : List-of-numbers -> Number
+(define (sum a b)
+  (+ a b))
+
+(define (sum-positive l)
+  (cond
+    [(empty? l) 0]
+    [else
+       (if (positive? (first l))  ;;herev first l positive bol
+           (sum (first l) (sum-positive (rest l)))  ;; first too positive bol (sum (first +  rest))
+           (sum-positive (rest l)))])) ;; ugui bol (sum  (sum-positive (rest l)))
+
+(check-expect (sum-positive empty) 0)
+(check-expect (sum-positive (cons 3 (cons -2 (cons 5 empty)))) 8)
+
+
+;;EX04
+
+;; contains-zero? : List-of-numbers -> Boolean
+
+(define (contains-zero? l)
+  (cond
+    [(empty? l) #f]
+    [else  
+       (or (= (first l) 0)
+           (contains-zero? (rest l)))]))
+(check-expect (contains-zero? empty) #false)
+(check-expect (contains-zero? (cons 4 (cons 0 empty))) #true)
+(check-expect (contains-zero? (cons 2 (cons 3 empty))) #false)
+
+
+;; all-even? : List-of-numbers -> Boolean
+
+(define (all-even? l)
+   (cond
+     [(empty? l) #t]
+     [else
+       (and (even? (first l))
+            (all-even? (rest l)))]))
+
+(check-expect (all-even? empty) #true)
+(check-expect (all-even? (cons 2 (cons 4 empty))) #true)
+(check-expect (all-even? (cons 2 (cons 3 empty))) #false)
+
+;;EX06
+
+;; any-negative? : List-of-numbers -> Boolean
+
+(define (any-negative? l)
+    (cond
+      [(empty? l) #f]
+      [else
+        (or (negative? (first l))
+            (any-negative? (rest l)))]))
+
+(check-expect (any-negative? empty) #false)
+(check-expect (any-negative? (cons 1 (cons -3 empty))) #true)
+
+;;EX07
+
+;; first-item : NEList-of-numbers -> Number
+
+(define (first-item l)
+   (cond
+     [(empty? (rest l)) (first l)]
+        [else
+          (first l)]))
+   
+(check-expect (first-item (cons 7 empty)) 7)
+(check-expect (first-item (cons 4 (cons 9 empty))) 4)
+
+;;EX08
+;; last-item : NEList-of-numbers -> Number
+
+(define (last-item-2 l)
+   (cond
+     [(empty? (rest l)) (first l)]
+        [else
+         (last-item-2 (rest l))]))     
+
+(check-expect (last-item-2 (cons 9 empty)) 9)
+(check-expect (last-item-2 (cons 2 (cons 5 (cons 8 empty)))) 8)
+
+;;EX09
+;; sum-ne-list : NEList-of-numbers -> Number
+
+(define (sum-ne-list l)
+  (cond
+    [(empty? (rest l)) (first l)]  ;; (rest l) uldsen toonuud n empty baival (first l)-iig gargana
+    [else
+       (sum (first l) (sum-ne-list (rest l)))]))  ;; esvel (first l) + (rest l)
+
+(check-expect (sum-ne-list (cons 6 empty)) 6)
+(check-expect (sum-ne-list (cons 2 (cons 3 (cons 4 empty)))) 9)
+
+
+;;EX10
+
+;; count-images : List-of-images -> Number
+(require 2htdp/image)
+
+(define (count-images l)
+  (cond
+    [(empty? l) 0]
+    [else 
+       (+ 1 (count-images (rest l)))]))
+
+(check-expect (count-images empty) 0)
+(check-expect (count-images
+     (cons (circle 5 "solid" "red")
+          (cons (circle 10 "solid" "blue") empty))) 2)
+
+;;EX12
+(define (count-positive-bug l)
+  (cond
+    [(empty? l) 0]
+    [else
+     (if (positive? (first l))
+     (+ 1 (count-positive-bug (rest l)))
+     (count-positive-bug (rest l)))]))
+
+(check-expect (count-positive-bug (cons 5 (cons -1 empty))) 1)

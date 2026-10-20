@@ -70,3 +70,4 @@
 (check-expect (senior? bobo) #false)
 (check-expect (senior? (make-pet "Хар" "нохой" 10)) #true)
 (check-expect (senior? (make-pet "Цагаан" "муур" 9)) #false)
+
