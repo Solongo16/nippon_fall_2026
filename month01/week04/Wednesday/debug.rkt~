@@ -1,0 +1,27 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname debug) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+;; 1
+(define (better-student a b)
+  (if (> (final-score a) (final-score b)) a b))
+(check-expect (better-student sora (make-student "Tie" 60 60)) sora)
+
+;; 2
+(define (points-to-pass s)
+  (- 60 (final-score s)))
+(check-expect (points-to-pass aki) 0)
+
+;; 3
+(define (rename s new-name)
+  (make-student new-name (student-project s) (student-quiz s)))
+(check-expect (rename aki "Akira") (make-student "Akira" 80 90))
+
+;; 4
+(define (score-label s)
+  (text (final-score s) 24 "black"))
+(check-expect (score-label sora) (text "60" 24 "black"))
+
+;; 5
+(define (perfect-project? s)
+  (= (student-project s) "100"))
+(check-expect (perfect-project? aki) #false)

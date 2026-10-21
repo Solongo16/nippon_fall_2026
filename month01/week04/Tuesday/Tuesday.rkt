@@ -255,4 +255,5 @@
                        (rectangle 120 70 "outline" "green")))
 (check-expect (student-card ren)
               (overlay (above (text "ren" 18 "black") (text "F" 24 "red"))
-                       (rectangle 120 70 "outline" "red")))   
+                       (rectangle 120 70 "outline" "red")))
+
