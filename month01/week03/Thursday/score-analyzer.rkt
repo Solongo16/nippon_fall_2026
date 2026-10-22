@@ -96,7 +96,7 @@
     [else
      (above
           (rectangle (first image) 20 "solid" "blue")
-          (score-bars (rest image)))]))
+          (score-bars (rest image)))]))  
 ;; оноо бүрийг 2-р долоо хоногийн score-bar-аар (rectangle оноо 20 "solid" "blue")
 ;; дээрээс доош тавина. Хоосон list → empty-image.
 (check-expect (score-bars empty) empty-image)

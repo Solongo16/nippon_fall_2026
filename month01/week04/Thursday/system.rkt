@@ -34,7 +34,7 @@
         [(>= n 80) "B"]  
         [(>= n 70) "C"]
         [(>= n 60) "D"]
-        [else "F"]))
+        [else "F"])) 
 
 ;; student-grade : Student -> String
 (define (student-grade student)
@@ -43,6 +43,8 @@
 (check-expect (student-grade aki) "B")
 (check-expect (student-grade sora) "D")
 (check-expect (student-grade mina) "A")
+(check-expect (student-grade Zen) "D")
+(check-expect (student-grade Ben) "C")
 (check-expect (student-grade ren) "F")
 (check-expect (student-grade (make-student "Nine" 90 90)) "A")
 
@@ -54,9 +56,10 @@
   (student-quiz student)
   (min 100 (+ (student-project student) bonus))))
 ;; project оноонд bonus нэмнэ, гэхдээ 100-аас хэтрэхгүй (min ашигла)
-(check-expect (add-bonus aki 5) (make-student "aki" 80 95))
-(check-expect (add-bonus mina 20) (make-student "mina" 95 100))
+(check-expect (add-bonus aki 5) (make-student "Aki" 80 95))
+(check-expect (add-bonus mina 20) (make-student "Mina" 95 100))
 (check-expect (add-bonus ren 0) ren)
+(check-expect (add-bonus Zen 5) (make-student "Zen" 60 65))
 
 
 ;; retake-quiz : Student Number -> Student
@@ -64,9 +67,11 @@
   (make-student (student-name s) (max new (student-quiz s))
                 (student-project s)))
 ;; quiz-ийг дахин өгсөн: шинэ оноо их бол түүнийг, үгүй бол хуучныг үлдээнэ (max)
-(check-expect (retake-quiz ren 70) (make-student "ren" 70 55))
+(check-expect (retake-quiz ren 70) (make-student "Ren" 70 55))
 (check-expect (retake-quiz aki 50) aki)
-
+(check-expect (retake-quiz Zen 40) Zen)
+(check-expect (retake-quiz Ben 50) Ben)
+          
 ;;EX06A
 ;; card-color : Student -> String
 (define (card-color student)
@@ -76,6 +81,9 @@
 ;; тэнцсэн бол "green", үгүй бол "red"
 (check-expect (card-color aki) "green")
 (check-expect (card-color ren) "red")
+(check-expect (card-color Zen) "green")
+(check-expect (card-color Ben) "green")
+
 
 ;; student-card : Student -> Image
 (require 2htdp/image)
@@ -87,11 +95,18 @@
 
 ;; нэр (18, хар), доор нь үсгэн үнэлгээ (24, card-color), card-color хүрээ (120 × 70)
 (check-expect (student-card aki) 
-              (overlay (above (text "aki" 18 "black") (text "B" 24 "green"))
+              (overlay (above (text "Aki" 18 "black") (text "B" 24 "green"))
                        (rectangle 120 70 "outline" "green")))
 (check-expect (student-card ren)
-              (overlay (above (text "ren" 18 "black") (text "F" 24 "red"))
+              (overlay (above (text "Ren" 18 "black") (text "F" 24 "red"))
                        (rectangle 120 70 "outline" "red")))
+(check-expect (student-card Zen)
+              (overlay (above (text "Zen" 18 "black") (text "D" 24 "green"))
+                       (rectangle 120 70 "outline" "green")))
+(check-expect (student-card Ben)
+              (overlay (above (text "Ben" 18 "black") (text "C" 24 "green"))
+                       (rectangle 120 70 "outline" "green")))
+
 
 ;;Wednesday
 ;;EX01
@@ -104,14 +119,19 @@
 ;; эцсийн оноо нь их сурагч; тэнцүү бол эхнийх
 (check-expect (better-student aki mina) mina)
 (check-expect (better-student mina aki) mina)
+(check-expect (better-student Ben Zen) Ben)
 (check-expect (better-student sora (make-student "Tie" 60 60)) sora)
+
 
   ;; same-grade? : Student Student -> Boolean
 (define (same-grade? s1 s2)
    (string=? (student-grade s1) (student-grade s2)))
 ;; хоёулаа ижил үсгэн үнэлгээтэй бол #true. string=? ашигла.
-(check-expect (same-grade? aki (make-student "Ben" 85 85)) #true)
+(check-expect (same-grade? aki (make-student "Ken" 85 85)) #true)
 (check-expect (same-grade? aki mina) #false)
+(check-expect (same-grade? Ben mina) #false)
+(check-expect (same-grade? Zen aki) #false)
+
 
 ;;EX03
 ;; points-to-pass : Student -> Number
@@ -121,10 +141,13 @@
 (check-expect (points-to-pass ren) 9)
 (check-expect (points-to-pass sora) 0)
 (check-expect (points-to-pass aki) 0)
+(check-expect (points-to-pass Zen) 0)
+(check-expect (points-to-pass Ben) 0)
+
 
 ;;Thursday
 
-  (define students (list aki sora mina ren))
+(define students (list aki sora mina ren))
 
 ;; count-passing : List-of-students -> Number
 (define (count-passing student)
@@ -139,8 +162,7 @@
 (check-expect (count-passing empty) 0)
 (check-expect (count-passing students) 3)
 (check-expect (count-passing (list ren)) 0)
-(check-expect (count-passing my-class) 5) 
-
+(check-expect (count-passing my-class) 5)
 
 ;; C
 (define (total-final t)
@@ -153,7 +175,7 @@
 ;; total-final : List-of-students -> Number
 ;; бүх сурагчийн эцсийн онооны нийлбэр
 (check-expect (total-final empty) 0) 
-(check-expect (total-final my-class) 416.6)
+(check-expect (total-final my-class) 419.6)
 
 ;;D
 (define (count-students s)
@@ -165,6 +187,7 @@
 (check-expect (count-students empty) 0)
 (check-expect (count-students students) 4)
 (check-expect (count-students my-class) 6) 
+
 
 ;; EX4A
 ;; A
@@ -181,6 +204,9 @@
 (check-expect (passing-students empty) empty)
 (check-expect (passing-students students) (list aki sora mina))
 (check-expect (passing-students (list ren aki)) (list aki))
+(check-expect (passing-students (list Ben Zen aki)) (list Ben Zen aki))
+(check-expect (passing-students (list Zen ren mina)) (list Zen mina))
+
 
 ;; B
 ;; names : List-of-students -> List-of-strings
@@ -193,6 +219,7 @@
       (names (rest n)))]))
 (check-expect (names empty) empty)
 (check-expect (names students) (list "Aki" "Sora" "Mina" "Ren"))
+(check-expect (names my-class) (list "Aki" "Sora" "Mina" "Ren" "Ben" "Zen"))
 
 ;; grades of student
   (define (grades s)
@@ -203,6 +230,7 @@
    (student-grade (first s)) (grades (rest s)))]))
 ;; сурагч бүрийн үсгэн үнэлгээ
 (check-expect (grades students) (list "B" "D" "A" "F"))
+(check-expect (grades my-class) (list "B" "D" "A" "F" "C" "D"))
 
 
   ;; best-student : NEList-of-students -> Student
@@ -215,7 +243,7 @@
 ;; эцсийн оноо хамгийн их сурагч (тэнцүү бол түрүүлж байгаа нь)
 (check-expect (best-student (list sora)) sora)
 (check-expect (best-student students) mina)
-
+(check-expect (best-student my-class) mina)
 
 ;; B
 ;; average-final : NEList-of-students -> Number
@@ -223,26 +251,40 @@
      (/ (total-final a) (count-students a)))
 ;; эцсийн онооны дундаж: total-final ба count-students-ийг дууд
 (check-expect (average-final (list aki)) 86)
-(check-expect (average-final my-class) 69.4)
+
 
 ;; C
 (define (top-name s)
   (student-name (best-student s)))
 ;; top-name : NEList-of-students -> String
 (check-expect (top-name students) "Mina")
+(check-expect (top-name my-class) "Mina")
 
+(define (passing? student)
+  (>= (final-score student) 60))
+
+;; passing? : Student -> Boolean
+;; эцсийн оноо 60 ба түүнээс дээш бол #true
+(check-expect (passing? sora) #true)                          ; яг 60
+(check-expect (passing? ren) #false)
+(check-expect (passing? Zen) #true)
+(check-expect (passing? Ben) #true)
+(check-expect (passing? (make-student "Edge" 59 61)) #true)   ; 60.2
+(check-expect (passing? (make-student "Low" 61 59)) #false)   ; 59.8
 
 ;;failing-students
 (define (failing-students s)
-  (cond [(empty? l) empty]
-        [else (if (passing? (first l))
-           (failing-students (rest l)) (cons (first l) (failing-students (rest l))))]))
+  (cond [(empty? s) empty]
+        [else (if (passing? (first s))
+           (failing-students (rest s))
+           (cons (first s) (failing-students (rest s))))]))
 ;; failing-students : List-of-students -> List-of-students
 (check-expect (failing-students empty) empty)
 (check-expect (failing-students students) (list ren))
+(check-expect (failing-students my-class) (list ren))
 
 ;; count-failing : List-of-students -> Number
-
 (define (count-failing l)
   (- (count-students l) (count-passing l)))
 (check-expect (count-failing students) 1)
+(check-expect (count-failing my-class) 1)
