@@ -288,3 +288,7 @@
   (- (count-students l) (count-passing l)))
 (check-expect (count-failing students) 1)
 (check-expect (count-failing my-class) 1)
+
+
+(define (final-score score)
+  (+ (* (student-quiz score) 0.4) (* (student-project score) 0.6)))
