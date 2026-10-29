@@ -14,6 +14,7 @@
                       (make-student "Ben" 70 70)
                       (make-student "Zen" 60 60)))
 
+(define students (list aki sora mina ren))
 ;;final-score?
 (define (final-score student)
   (+ (* (student-quiz student) 0.4)
@@ -82,7 +83,7 @@
 (check-expect (card-color aki) "green")
 (check-expect (card-color ren) "red")
 (check-expect (card-color Zen) "green")
-(check-expect (card-color Ben) "green")
+(check-expect (card-color Ben) "green") 
 
 
 ;; student-card : Student -> Image
@@ -146,8 +147,6 @@
 
 
 ;;Thursday
-
-(define students (list aki sora mina ren))
 
 ;; count-passing : List-of-students -> Number
 (define (count-passing student)
@@ -250,8 +249,8 @@
 (define (average-final a)
      (/ (total-final a) (count-students a)))
 ;; эцсийн онооны дундаж: total-final ба count-students-ийг дууд
-(check-expect (average-final (list aki)) 86)
-
+(check-expect (average-final (list aki sora)) 73)
+(check-expect (average-final students) 72.4)
 
 ;; C
 (define (top-name s)
@@ -288,4 +287,5 @@
   (- (count-students l) (count-passing l)))
 (check-expect (count-failing students) 1)
 (check-expect (count-failing my-class) 1)
+
 
